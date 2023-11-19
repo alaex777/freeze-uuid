@@ -5,6 +5,9 @@
 ### Usage Example
 
 ```python
+from freeze_uuid import freeze_uuid
+
+
 @freeze_uuid('12af6b44-8181-11ee-b890-628ab7cd4d99')
 def test_uuid():
     assert str(uuid.uuid1()) == '12af6b44-8181-11ee-b890-628ab7cd4d99'
