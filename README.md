@@ -1,6 +1,7 @@
 # freeze-uuid
 
 ## Python package for mocking uuid
+## For now only uuid1 and uuid4 have mocks
 
 ### Usage Example
 
