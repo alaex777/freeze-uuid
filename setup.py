@@ -1,12 +1,16 @@
 from setuptools import setup, find_packages
 
+with open('README.md', 'r', encoding='utf-8') as fh:
+    long_description = fh.read()
+
 setup(
     name='freeze-uuid',
-    version='0.1.0',
+    version='0.1.1',
     author='Alexander Balashov',
     author_email='alaex777@gmail.com',
     description='Python package for mocking uuid.',
-    long_description=open('README.md').read(),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
