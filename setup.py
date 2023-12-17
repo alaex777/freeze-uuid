@@ -6,11 +6,12 @@ setup(
     author='Alexander Balashov',
     author_email='alaex777@gmail.com',
     description='Python package for mocking uuid.',
+    long_description=open('README.md').read(),
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.9',
 )

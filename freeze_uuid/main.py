@@ -29,22 +29,16 @@ def freeze_uuid(value: str = DEFAULT_VALUE) -> Callable:
 
         def wrapper(*args: Any, **kwargs: Any) -> None:
             value_magic()
-            prev_uuid = uuid.UUID
             uuid.UUID = FakeUUID
 
-            func(*args, **kwargs)
-
-            uuid.UUID = prev_uuid
+            return func(*args, **kwargs)
 
         @functools.wraps(func)
         async def async_wrapper(*args: Any, **kwargs: Any) -> None:
             value_magic()
-            prev_uuid = uuid.UUID
             uuid.UUID = FakeUUID
 
-            await func(*args, **kwargs)
-
-            uuid.UUID = prev_uuid
+            return await func(*args, **kwargs)
 
         if iscoroutinefunction(func):
             return async_wrapper

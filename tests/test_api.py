@@ -30,3 +30,12 @@ def test_uuid_default():
 async def test_uuid_async():
     assert str(uuid.uuid1()) == TEST_UUID
     assert str(uuid.uuid4()) == TEST_UUID
+
+
+@freeze_uuid(TEST_UUID)
+def get_uuid():
+    return uuid.uuid1()
+
+
+def test_uuid_from_func():
+    assert get_uuid() == TEST_UUID
