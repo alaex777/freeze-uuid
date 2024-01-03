@@ -2,6 +2,7 @@
 
 ## Python package for mocking uuid
 ## For now only uuid1 and uuid4 have mocks
+## Also you can use list of uuids for multiple usage
 
 ### Usage Example
 
@@ -24,5 +25,12 @@ def test_uuid_default():
 async def test_uuid_async():
     assert str(uuid.uuid1()) == '12af6b44-8181-11ee-b890-628ab7cd4d99'
     assert str(uuid.uuid4()) == '12af6b44-8181-11ee-b890-628ab7cd4d99'
+
+@freeze_uuid(['12af6b44-8181-11ee-b890-628ab7cd4d99', '12af6b44-8181-11ee-b890-628ab7cd4d98'])
+def test_uuid_list():
+    assert str(uuid.uuid1()) == '12af6b44-8181-11ee-b890-628ab7cd4d99'
+    assert str(uuid.uuid4()) == '12af6b44-8181-11ee-b890-628ab7cd4d98'
+    assert str(uuid.uuid4()) == '12af6b44-8181-11ee-b890-628ab7cd4d98'
+    assert str(uuid.uuid4()) == '12af6b44-8181-11ee-b890-628ab7cd4d98'
 
 ```
