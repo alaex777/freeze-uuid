@@ -1,6 +1,6 @@
 import uuid
 import functools
-from typing import Any, Callable
+from typing import Any, Callable, Union
 from inspect import iscoroutinefunction
 
 DEFAULT_VALUE = '00000000-0000-0000-0000-000000000000'
@@ -22,7 +22,7 @@ class FakeUUID:
         return str(__value) == self.value
 
 
-def freeze_uuid(values: str | list = DEFAULT_VALUE) -> Callable:
+def freeze_uuid(values: Union[str, list] = DEFAULT_VALUE) -> Callable:
     def inner(func: Callable) -> Callable:
         def value_magic():
             global VALUES
