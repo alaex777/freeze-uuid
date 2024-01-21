@@ -89,3 +89,9 @@ def test_uuid_2():
 def test_uuid_default_3():
     assert str(uuid.uuid1()) == '00000000-0000-0000-0000-000000000000'
     assert str(uuid.uuid4()) == '00000000-0000-0000-0000-000000000000'
+
+
+@freeze_uuid(TEST_UUID)
+def test_uuid_3():
+    assert str(uuid.uuid3(uuid.NAMESPACE_DNS, 'google.com')) == TEST_UUID
+    assert str(uuid.uuid5(uuid.NAMESPACE_DNS, 'google.com')) == TEST_UUID
