@@ -37,8 +37,7 @@ def test_uuid_list():
 
 ```
 
-### Since library mocks uuid.UUID class, it can be used with
-### all libraries, that support UUID class, i.e. uuid7
+### Since library mocks uuid.UUID class, it can be used with all libraries, that support UUID class, i.e. uuid7
 
 ```python
 from uuid_extensions import uuid7
