@@ -1,4 +1,5 @@
 import uuid
+from uuid_extensions import uuid7
 
 import pytest
 
@@ -95,3 +96,12 @@ def test_uuid_default_3():
 def test_uuid_3():
     assert str(uuid.uuid3(uuid.NAMESPACE_DNS, 'google.com')) == TEST_UUID
     assert str(uuid.uuid5(uuid.NAMESPACE_DNS, 'google.com')) == TEST_UUID
+
+
+@freeze_uuid(TEST_UUID)
+def test_uuid_7():
+    assert str(uuid7()) == TEST_UUID
+
+
+def test_uuid_7_not_equal():
+    assert str(uuid7()) != TEST_UUID
