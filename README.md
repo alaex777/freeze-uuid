@@ -36,3 +36,15 @@ def test_uuid_list():
     assert str(uuid.uuid4()) == '12af6b44-8181-11ee-b890-628ab7cd4d98'
 
 ```
+
+### Since library mocks uuid.UUID class, it can be used with
+### all libraries, that support UUID class, i.e. uuid7
+
+```python
+from uuid_extensions import uuid7
+
+@freeze_uuid(TEST_UUID)
+def test_uuid_7():
+    assert str(uuid7()) == TEST_UUID
+
+```
