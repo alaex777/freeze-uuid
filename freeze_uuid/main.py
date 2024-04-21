@@ -41,6 +41,7 @@ def freeze_uuid(values: Union[str, list] = DEFAULT_VALUE) -> Callable:
             for value in VALUES:
                 uuid.UUID(value)
 
+        @functools.wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> None:
             value_magic()
             prev_uuid = uuid.UUID
@@ -67,3 +68,26 @@ def freeze_uuid(values: Union[str, list] = DEFAULT_VALUE) -> Callable:
 
         return wrapper
     return inner
+
+
+class freeze_uuid_manager:
+    def __init__(self, values: str | list[str]):
+        global VALUES
+        if isinstance(values, str):
+            VALUES = [values]
+        else:
+            VALUES = values
+
+        for value in VALUES:
+            uuid.UUID(value)
+
+        global COUNT
+        COUNT = 0
+
+        self.prev_uuid = uuid.UUID
+
+    def __enter__(self):
+        uuid.UUID = FakeUUID
+
+    def __exit__(self, *args):
+        uuid.UUID = self.prev_uuid

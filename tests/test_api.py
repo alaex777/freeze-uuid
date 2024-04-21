@@ -3,7 +3,7 @@ from uuid_extensions import uuid7
 
 import pytest
 
-from freeze_uuid import freeze_uuid
+from freeze_uuid import freeze_uuid, freeze_uuid_manager
 
 from tests.testdata import (
     TEST_UUID, TEST_UUID_2, TEST_UUID_3, TEST_UUID_4,
@@ -105,3 +105,29 @@ def test_uuid_7():
 
 def test_uuid_7_not_equal():
     assert str(uuid7()) != TEST_UUID
+
+
+@pytest.mark.parametrize(
+    ['expected_result', 'freeze_data'],
+    [
+        pytest.param(
+            TEST_UUID_2,
+            [TEST_UUID_2],
+        ),
+        pytest.param(
+            TEST_UUID_3,
+            [TEST_UUID_3],
+        ),
+        pytest.param(
+            TEST_UUID_4,
+            [TEST_UUID_4],
+        ),
+        pytest.param(
+            TEST_UUID_5,
+            [TEST_UUID_5],
+        ),
+    ]
+)
+def test_parametrize(expected_result, freeze_data):
+    with freeze_uuid_manager(freeze_data):
+        assert str(uuid.uuid4()) == expected_result
