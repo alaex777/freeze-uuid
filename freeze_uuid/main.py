@@ -71,7 +71,7 @@ def freeze_uuid(values: Union[str, list] = DEFAULT_VALUE) -> Callable:
 
 
 class freeze_uuid_manager:
-    def __init__(self, values: str | list[str]):
+    def __init__(self, values: Union[str, list[str]]) -> None:
         global VALUES
         if isinstance(values, str):
             VALUES = [values]
@@ -86,8 +86,8 @@ class freeze_uuid_manager:
 
         self.prev_uuid = uuid.UUID
 
-    def __enter__(self):
+    def __enter__(self) -> None:
         uuid.UUID = FakeUUID
 
-    def __exit__(self, *args):
+    def __exit__(self, *args) -> None:
         uuid.UUID = self.prev_uuid
