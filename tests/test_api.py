@@ -108,26 +108,73 @@ def test_uuid_7_not_equal():
 
 
 @pytest.mark.parametrize(
-    ['expected_result', 'freeze_data'],
+    ['expected_result_uuid_4', 'expected_result_uuid_1', 'freeze_data'],
     [
         pytest.param(
             TEST_UUID_2,
-            [TEST_UUID_2],
+            TEST_UUID_5,
+            [TEST_UUID_2, TEST_UUID_5],
         ),
         pytest.param(
             TEST_UUID_3,
-            [TEST_UUID_3],
+            TEST_UUID_6,
+            [TEST_UUID_3, TEST_UUID_6],
         ),
         pytest.param(
             TEST_UUID_4,
-            [TEST_UUID_4],
+            TEST_UUID_7,
+            [TEST_UUID_4, TEST_UUID_7],
         ),
         pytest.param(
             TEST_UUID_5,
-            [TEST_UUID_5],
+            TEST_UUID_8,
+            [TEST_UUID_5, TEST_UUID_8],
         ),
     ]
 )
-def test_parametrize(expected_result, freeze_data):
+def test_parametrize(expected_result_uuid_4, expected_result_uuid_1, freeze_data):
     with freeze_uuid_manager(freeze_data):
-        assert str(uuid.uuid4()) == expected_result
+        assert str(uuid.uuid4()) == expected_result_uuid_4
+        assert str(uuid.uuid1()) == expected_result_uuid_1
+
+    assert str(uuid.uuid4()) != expected_result_uuid_4
+    assert str(uuid.uuid1()) != expected_result_uuid_1
+
+
+async def get_uuid_4():
+    return str(uuid.uuid4())
+
+
+@pytest.mark.parametrize(
+    ['expected_result_uuid_4', 'expected_result_uuid_1', 'freeze_data'],
+    [
+        pytest.param(
+            TEST_UUID_2,
+            TEST_UUID_5,
+            [TEST_UUID_2, TEST_UUID_5],
+        ),
+        pytest.param(
+            TEST_UUID_3,
+            TEST_UUID_6,
+            [TEST_UUID_3, TEST_UUID_6],
+        ),
+        pytest.param(
+            TEST_UUID_4,
+            TEST_UUID_7,
+            [TEST_UUID_4, TEST_UUID_7],
+        ),
+        pytest.param(
+            TEST_UUID_5,
+            TEST_UUID_8,
+            [TEST_UUID_5, TEST_UUID_8],
+        ),
+    ]
+)
+@pytest.mark.asyncio
+async def test_async_parametrize(expected_result_uuid_4, expected_result_uuid_1, freeze_data):
+    with freeze_uuid_manager(freeze_data):
+        assert await get_uuid_4() == expected_result_uuid_4
+        assert str(uuid.uuid1()) == expected_result_uuid_1
+
+    assert await get_uuid_4() != expected_result_uuid_4
+    assert str(uuid.uuid1()) != expected_result_uuid_1
