@@ -178,3 +178,8 @@ async def test_async_parametrize(expected_result_uuid_4, expected_result_uuid_1,
 
     assert await get_uuid_4() != expected_result_uuid_4
     assert str(uuid.uuid1()) != expected_result_uuid_1
+
+
+def test_freeze_uuid_manager_default():
+    with freeze_uuid_manager():
+        assert str(uuid.uuid4()) == '00000000-0000-0000-0000-000000000000'

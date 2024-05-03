@@ -10,13 +10,13 @@ COUNT = 0
 
 
 class FakeUUID(uuid.UUID):
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         global COUNT
         self.value = VALUES[COUNT] if COUNT < len(VALUES) else VALUES[-1]
-        self.int = int(self.value.replace('-', ''), 16)
+        self.int = int(self.value.replace('-', ''), 16)  # type: ignore
         COUNT += 1
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: Any) -> None:
         object.__setattr__(self, name, value)
 
     def __str__(self) -> str:
@@ -28,7 +28,7 @@ class FakeUUID(uuid.UUID):
 
 def freeze_uuid(values: Union[str, list] = DEFAULT_VALUE) -> Callable:
     def inner(func: Callable) -> Callable:
-        def value_magic():
+        def value_magic() -> None:
             global VALUES
             if isinstance(values, str):
                 VALUES = [values]
@@ -71,7 +71,7 @@ def freeze_uuid(values: Union[str, list] = DEFAULT_VALUE) -> Callable:
 
 
 class freeze_uuid_manager:
-    def __init__(self, values: Union[str, list[str]]) -> None:
+    def __init__(self, values: Union[str, list[str]] = DEFAULT_VALUE) -> None:
         global VALUES
         if isinstance(values, str):
             VALUES = [values]
@@ -89,5 +89,5 @@ class freeze_uuid_manager:
     def __enter__(self) -> None:
         uuid.UUID = FakeUUID
 
-    def __exit__(self, *args) -> None:
+    def __exit__(self, *args: Any) -> None:
         uuid.UUID = self.prev_uuid
