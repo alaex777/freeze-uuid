@@ -11,6 +11,7 @@ setup(
     description='Python package for mocking uuid.',
     long_description=long_description,
     long_description_content_type='text/markdown',
+    url='https://github.com/alaex777/freeze-uuid',
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
